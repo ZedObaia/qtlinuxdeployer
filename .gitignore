@@ -1,0 +1,5 @@
+__pycache__
+*.log
+Dependecy-collector
+depends.sh
+testdir
