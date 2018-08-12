@@ -115,7 +115,7 @@ def writeStartupScript(template, dirpath, binary):
     shutil.move(os.path.join(dirpath, os.path.basename(template)),
      newFilePath)
     file = open(newFilePath, 'a')
-    file.write(binary)
+    file.write('./'+binaryFileName)
     file.close()
     st = os.stat(newFilePath)
     os.chmod(newFilePath, st.st_mode | stat.S_IEXEC)
