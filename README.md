@@ -14,4 +14,4 @@
 
 ## Usage
 `./qtlinuxdeployer -b /path/to/binary/file -o /path/to/output/dir`
->This will create set up the output directory with all necessary files to run your application on another linux machine
+>This will set-up the output directory with all necessary files to run your application on another linux machine
