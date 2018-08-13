@@ -100,6 +100,10 @@ def createHierarchy(filenames, libdirname, delimiter):
         if '/' in filename.split(delimiter)[1]:
             temp = mkdir(libdirname, filename.split(delimiter)[1].rsplit('/', 1)[0])
             shutil.copy(filename, temp)
+            if delimiter == '/plugins/':
+                for i in getDeps(filename):
+                    if 'Qt' in os.path.basename(i):
+                        shutil.copy(i, os.path.dirname(libdirname))
         else:
             shutil.copy(filename, libdirname)
 
@@ -111,11 +115,11 @@ def mkdir(parent, dirname):
 def writeStartupScript(template, dirpath, binary):
     shutil.copy(template, dirpath)
     binaryFileName = os.path.basename(binary)
-    newFilePath = os.path.join(dirpath, binaryFileName)
+    newFilePath = os.path.join(dirpath, binaryFileName+'.sh')
     shutil.move(os.path.join(dirpath, os.path.basename(template)),
      newFilePath)
     file = open(newFilePath, 'a')
-    file.write('./'+binaryFileName)
+    file.write('./'+ binaryFileName)
     file.close()
     st = os.stat(newFilePath)
     os.chmod(newFilePath, st.st_mode | stat.S_IEXEC)
