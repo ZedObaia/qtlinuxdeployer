@@ -2,6 +2,7 @@
 ## Description
 > Tool to create a deploy-able version of your Qt Application for Linux
 > - Repo is still in development
+> - Not ready for QML yet
 
 ## installation
 ### Debian
