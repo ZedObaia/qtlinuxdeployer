@@ -10,6 +10,8 @@
 
 `sudo pip3 install -r requirements.txt`
 
+`sudo apt-get install lsof`
+
 ## Usage
 `./qtlinuxdeployer -b /path/to/binary/file -o /path/to/output/dir`
 >This will create set up the output directory with all necessary files to run your application on another linux machine
