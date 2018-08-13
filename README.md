@@ -2,7 +2,7 @@
 ## Description
 > Tool to create a deploy-able version of your Qt Application for Linux
 > - Repo is still in development
-> - Not ready for QML yet
+> - Added minimal support to qml
 
 ## installation
 ### Debian
@@ -12,6 +12,8 @@
 
 `sudo apt-get install lsof`
 
+`sudo python3 setup.py`
+
 ## Usage
-`./qtlinuxdeployer -b /path/to/binary/file -o /path/to/output/dir`
+`qtlinuxdeployer -b /path/to/binary/file -o /path/to/output/dir -s /path/to/source/diw`
 >This will set-up the output directory with all necessary files to run your application on another linux machine
