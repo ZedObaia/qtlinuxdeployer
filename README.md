@@ -1,7 +1,7 @@
 # dependency-collector
 ## Description
 > Tool to create a deploy-able version of your Qt Application for Linux
-> Repo is still in development
+> - Repo is still in development
 
 ## installation
 ### Debian
