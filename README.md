@@ -12,7 +12,7 @@
 
 `sudo apt-get install lsof`
 
-`sudo python3 setup.py`
+`./setup.py --qmake /path/to/desired/qmake`
 
 ## Usage
 `qtlinuxdeployer -b /path/to/binary/file -o /path/to/output/dir -s /path/to/source/diw`
