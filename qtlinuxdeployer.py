@@ -10,6 +10,7 @@ import stat
 import atexit
 import json
 
+
 def main():
     # Parse arguments and make sure they are valid
     ap = argparse.ArgumentParser()
@@ -204,10 +205,11 @@ def writeStartupScript(template, dirpath, binary):
     st = os.stat(newFilePath)
     os.chmod(newFilePath, st.st_mode | stat.S_IEXEC)
 
+# using qt's tool qmlimportscanner to get required qml files
 def getQmlFiles(binPath, projectDir, qmlimportpath):
+    # path for qmlimportscanner binary
     qmlimportscanner = os.path.join(binPath, 'qmlimportscanner')
     if os.path.isfile(qmlimportscanner):
-        qmlfiles = ""
         qmltypes = []
         for file in os.listdir(projectDir):
             if file.endswith(".qml"):
@@ -215,8 +217,13 @@ def getQmlFiles(binPath, projectDir, qmlimportpath):
                 for line in fileobj:
                     if 'import' in line:
                         importedModule = line.split(' ')[1]
+                        importedModuleVersion = int(float(line.split(' ')[2].strip()))
                         if 'Qt' in importedModule:
-                            qmltypes.extend(getAllFiles(os.path.join(qmlimportpath, importedModule.replace('.','/'))))
+                            if importedModule == 'QtQuick' and importedModuleVersion == 2:
+                                importedModule = importedModule + '.' +str(importedModuleVersion)
+                                qmltypes.extend(getAllFiles(os.path.join(qmlimportpath, importedModule)))
+                            else:
+                                qmltypes.extend(getAllFiles(os.path.join(qmlimportpath, importedModule.replace('.','/'))))
 
         procPrepare =subprocess.Popen([qmlimportscanner, '-rootPath', projectDir, '-importPath', qmlimportpath]
         , stdout=subprocess.PIPE, universal_newlines=True)
@@ -230,6 +237,8 @@ def getQmlFiles(binPath, projectDir, qmlimportpath):
         return required
     else :
         print('Missing qmlimportscanner')
+
+# clean up at exit
 def exit_handler(procName):
     pid = getProcessByName(procName)
     if pid is not None:
@@ -237,6 +246,8 @@ def exit_handler(procName):
         print('Cleaning up ', procName)
     else :
         print('Nothing to clean up')
+
+# returns a list of files inside a directory recursively
 def getAllFiles(dir):
     tempList=[]
     for root, directories, filenames in os.walk(dir):
