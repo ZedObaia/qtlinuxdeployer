@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-import os
 import argparse
+import os
 import shutil
+
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--qmake", required = True, help="path to desired qmake")
+    ap.add_argument("--qmake", required=True, help="path to desired qmake")
     args = vars(ap.parse_args())
     qmake = args['qmake']
     if not os.path.isfile(qmake):
@@ -15,7 +16,7 @@ def main():
     cfgdir = mkdir(home, '.qtlinuxdeployer')
 
     srcdir = os.path.abspath('.')
-    files= os.listdir(srcdir)
+    files = os.listdir(srcdir)
     for filename in files:
         fullFilename = os.path.join(srcdir, filename)
         if (os.path.isfile(fullFilename)):
@@ -26,9 +27,13 @@ def main():
     os.system('./qtlinuxdeployerconfigtool')
     shutil.copy('./qtlinuxdeployer.py', '/usr/bin')
     shutil.move('/usr/bin/qtlinuxdeployer.py', '/usr/bin/qtlinuxdeployer')
+
+
 def mkdir(parent, dirname):
     if not os.path.exists(os.path.join(parent, dirname)):
-        os.makedirs(os.path.join(parent,dirname))
+        os.makedirs(os.path.join(parent, dirname))
     return os.path.join(parent, dirname)
+
+
 if __name__ == '__main__':
     main()
