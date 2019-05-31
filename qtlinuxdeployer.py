@@ -198,6 +198,8 @@ def animatedCopy(filesToCopy, dest):
     for filename in filesToCopy:
         FileNames.append(os.path.basename(filename))
     for i, filename in enumerate(filesToCopy):
+        if os.path.isdir(filename):
+            continue
         shutil.copy(filename, dest)
         time.sleep(0.02)
         suffix = "Copying {} to {}".format(os.path.basename(filename),
@@ -213,7 +215,7 @@ def createHierarchy(filenames, libdirname, delimiter):
             temp = mkdir(libdirname, filename.split(
                 delimiter)[1].rsplit('/', 1)[0])
             shutil.copy(filename, temp)
-            if delimiter == '/plugins/':
+            if delimiter == '/plugins/' or '.so' in filename and delimiter == '/qml/':
                 for i in getDeps(filename):
                     if 'Qt' in os.path.basename(i):
                         shutil.copy(i, os.path.dirname(libdirname))
